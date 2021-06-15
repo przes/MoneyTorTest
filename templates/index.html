@@ -1,0 +1,72 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ title }} | Project Dream Team</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" style="margin-top: 30px">
+    <input type="button" id="fetch" class="btn btn-primary" value="Fetch Users"/>
+    <br>
+    <br>
+    <div class="container-fluid">
+        {% if data %}
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>NAME</th>
+                <th>Date of Birth</th>
+                <th>Address</th>
+                <th>Email Id</th>
+                <th>Contact Number</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for x in data %}
+            <tr>
+                <td style="width: 190px;">
+                    {{ x.Person.first_name }} {{ x.Person.last_name }}
+                </td>
+                <td style="width: 190px;">
+                    {{ x.Person.dob }}
+                </td>
+                <td>
+                    {{ x.Address.street_number }}, {{ x.Address.city }}
+                </td>
+                <td>
+                    {{ x.Email.email }}
+                </td>
+                <td>
+                    {{ x.Phone.phone_no }}, {{ x.Phone.cell_no }}
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+    $(function() {
+        $("#fetch").click(
+            function (event) {
+                $.getJSON('/persons/fetch', function(data) {
+                    console.log(data)
+                    window.location.reload();
+                });
+                return false;
+            }
+        );
+    });
+
+
+
+
+
+</script>
